@@ -26,11 +26,12 @@ pcompleted() {
   printf '%s\n' "${GREEN}✓${NO_COLOR} $*"
 }
 
-BINDIR=~/.local/bin
-mkdir -p "$BINDIR"
+TARGET_DIR="$HOME/.local/"
+BIN_DIR="${TARGET_DIR}/bin"
+# mkdir -p "$BIN_DIR"
 
-if [ -f "$BINDIR/exa" ]; then
-  perror "$BINDIR/exa already exists, delete to reinstall"
+if [ -f "$BIN_DIR/exa" ]; then
+  perror "$BIN_DIR/exa already exists, delete to reinstall"
   exit
 fi
 
@@ -51,7 +52,8 @@ TMPDIR="$(mktemp -d -t install-exa.XXXXXX)"
   VERSION="$(curl -sL "https://api.github.com/repos/ogham/exa/releases/latest" | jq -r '.tag_name')"
   TARGET="exa-${OS}-${ARCH}-${VERSION}.zip"
   curl -sLO "https://github.com/ogham/exa/releases/download/${VERSION}/${TARGET}"
-  unzip "$TARGET" -d "$BINDIR/.."
-  pcompleted "Succesfully installed ${UNDERLINE}${BINDIR}/exa${NO_COLOR}"
+  unzip "$TARGET" -d "$TARGET_DIR"
+  mv "${TARGET_DIR}/completions/exa.zsh" "${TARGET_DIR}/completions/_exa"
+  pcompleted "Succesfully installed ${UNDERLINE}${BIN_DIR}/exa${NO_COLOR}"
 )
 rm -rf "$TMPDIR"
