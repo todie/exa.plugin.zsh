@@ -5,6 +5,10 @@ if [ ! $+commands[exa] ]; then
   ${0:h}/install-exa.sh
 fi
 
+has() { 
+  command -v -- "$1" 1>/dev/null 2>&1
+}
+
 fpath+=(~/.local/completions)
 manpath+=(~/.local/man)
 
