@@ -1,7 +1,7 @@
 0="${ZERO:-${${0:#$ZSH_ARGZERO}:-${(%):-%N}}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 
-if [ ! ${command[exa]}]; then
+if [ ! $+commands[exa] ]; then
   ${0:h}/install-exa.sh
 fi
 
